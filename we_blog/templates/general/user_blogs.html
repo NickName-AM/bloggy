@@ -1,0 +1,33 @@
+{% extends 'core/core.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+
+{% for blog in blogs %}
+    <div class="jumbotron">
+        <div class="blog">
+            <div class="writer"><small>@{{blog.writer}}</small></div>
+            <div class="heading">
+                <a class="show_blog" href="{% url 'show_blog' b_id=blog.id %}">
+                    <div class="heading">{{blog.heading}}</div>
+                </a>
+            </div>
+            <div class="content">
+                {% if blog.content|length > 20 %}
+                    {{ blog.content|slice:":20" }}...    
+                {% else %}
+                    {{blog.content}}
+                {% endif %}
+            </div>
+            <div class="created_date">
+                {{blog.created_date}}
+                {% if blog.created_date != blog.modified_date %}
+                    <small>(Modified)</small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock body %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}Core{% endblock title %}</title>
+</head>
+<body>
+    <div class="navbar">
+        <big>Bloggy</big>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'bloggers' %}">Bloggers</a>
+        <section style="float:right">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' u_id=user.id %}">Profile: {{user.username}}</a>|<a href="{% url 'signout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'signin' %}">Signin</a>
+            <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </section>
+    </div>
+    <div class="container">
+        {% block body %}
+        {% endblock body %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+body{
+    background-color: rgb(40,40,40);
+}
+
+.container{
+    width: 70%;
+    margin: 0px auto 0px;
+    color: white;
+}
+
+.jumbotron{
+    background-color: rgba(255,255,255, 0.5);
+    margin: 10px 20px 20px;
+    padding: 10px 20px 20px;
+    border-radius: 15px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+a{
+    text-decoration: none;
+    margin: 5px;
+    padding: 9px;
+    color: rgb(7,25,12);
+    border-radius: 9px;
+}
+a:hover{
+    background-color: rgb(60,60,60);
+    color: rgb(255,255,255);
+    transition-duration: 0.5s;
+}
+
+a.add{
+    color:white;
+    margin-right: 25px;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 0px;
+    float:right;
+}
+
+a.add:hover{
+    border-right: 5px solid rgba(255,255,255,0.5);
+    transition-duration: 0.2s;
+}
+
+
+.navbar{
+    padding: 20px;
+    background-color: rgb(100,100,100);
+    position: sticky;
+    top:0px;
+}
+
+.heading{
+    font-size: 45px;
+}
+
+.writer{
+    font-size: 20px;
+    float: right;
+}
+
+.content{
+    font-size: 18px;
+}
+
+big{
+    font-size: 20px;
+    color: black;
+    font-weight: bolder;
+}
+
+.input{
+    margin-bottom: 15px;
+}
+
+.formform{
+    width:320px;
+    background-color: rgb(69,69,69);
+    padding: 40px 30px 40px;
+    float:right;
+    margin-top: 100px;
+    border-radius: 5%;
+}
+
+label{
+    font-size: 20px;
+}
+
+.show_blog{
+    margin: 0px;
+    padding: 0px;
+    color: white;
+}
+
+.show_blog:hover{
+    color: rgb(40,40,40);
+}
+
+.profile{
+    background-color: rgba(255,255,255, 0.5);
+    padding: 20px;
+}
+
+.profileform{
+    padding: 20px;
+}
+
+.profileinput{
+    margin-bottom: 15px;
+}
+
+.blogger{
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    
+}
+
+.blogger:hover{
+    color: black;
+}
+
+.nextblog{
+    float: left;
+}
+
+.msg{
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(54, 69, 79);
+    margin-top: 10px;
+    text-align: center;
+}

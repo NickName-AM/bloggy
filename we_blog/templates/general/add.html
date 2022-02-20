@@ -1,0 +1,17 @@
+{% extends 'core/core.html' %}
+
+{% block title %}Add Blog{% endblock title %}
+
+{% block body %}
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="heading" id="heading" placeholder="Title" maxlength="30" size="80" style="padding: 10px;background-color: rgb(70,70,70);color: white; font-size: 20px;" required>
+        </div>
+        <div>
+            
+            <textarea name="content" id="content" placeholder="Blog" cols="80" rows="20" maxlength="3000" style="background-color: rgb(70,70,70);color: white; font-size: 20px;" required></textarea>
+        </div>
+        <input type="submit" value="Add" style="margin-top: 10px;padding: 8px; font-size: 14px;">
+    </form>
+{% endblock body %}

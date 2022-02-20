@@ -1,0 +1,32 @@
+{% extends 'core/core.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+                <div class="jumbotron">
+                    <div class="blog">
+                        <div class="writer"><small>@{{blog.writer}}</small></div>
+                        <div class="heading">{{blog.heading}}</div>
+                        <div class="content">{{blog.content}}</div><br>
+                        <div class="created_date">
+                            {{blog.created_date}}
+                            {% if blog.created_date != blog.modified_date %}
+                                <small>(Modified)</small>
+                            {% endif %}
+                        </div>
+                        <br>
+                        <div class="del-btn" style="float: left;">
+                            {% if user.is_superuser or blog.writer_id == user.id %}
+                                <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
+                            {% endif %}
+                        </div>
+                        <div class="edit-btn">
+                            {% if blog.writer_id == user.id %}
+                                <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+{% endblock body %}

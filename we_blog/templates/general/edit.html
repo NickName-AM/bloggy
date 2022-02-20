@@ -1,0 +1,16 @@
+{% extends 'core/core.html' %}
+
+{% block title %}Add Blog{% endblock title %}
+
+{% block body %}
+    <div class="heading">
+        {{blog.heading}}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <textarea name="content" id="content" cols="80" rows="20" maxlength="3000" style="background-color: rgb(70,70,70);color: white; font-size: 20px;">{{blog.content}}</textarea>
+        </div>
+        <input type="submit" value="Edit" style="padding: 8px; font-size: 14px;">
+    </form>
+{% endblock body %}

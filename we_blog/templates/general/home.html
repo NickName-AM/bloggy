@@ -1,0 +1,66 @@
+{% extends 'core/core.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="msg">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+        {% if not blogs %}
+        <div class="jumbotron">
+            <h1>There are currently no blogs.</h1>
+        </div>
+        {% else %}
+            {% for blog in blogs %}
+                <div class="jumbotron">
+                    <div class="blog">
+                        <div class="writer"><small>@{{blog.writer}}</small></div>
+                        <a class="show_blog" href="{% url 'show_blog' b_id=blog.id %}">
+                            <div class="heading">{{blog.heading}}</div>
+                        </a>
+                        <div class="content">
+                            {% if blog.content|length > 20 %}
+                                {{ blog.content|slice:":20" }}...    
+                            {% else %}
+                                {{blog.content}}
+                            {% endif %}<br><br>
+                        </div>
+                        <div class="created_date">
+                            {{blog.created_date}}
+                            {% if blog.created_date != blog.modified_date %}
+                                <small>(Modified)</small>
+                            {% endif %}
+                        </div>
+                        <br>
+                        {% if user.is_superuser or blog.writer_id == user.id %}
+                            <div class="del-btn" style="float: left;">
+                                <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
+                            </div>
+                        {% endif %}
+                        {% if blog.writer_id == user.id %}
+                            <div class="edit-btn">
+                                <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
+                            </div>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="below">
+            {% if blogs|length == 10 %}
+                    <div class="nextblog">
+                        <a href="{% url 'home' %}" class="add">Next</a>
+                    </div>
+            {% endif %}
+            {% if user.is_authenticated %}
+                    <div class="addblog">
+                        <a href="{% url 'add' %}" class="add">Add Blog</a>
+                    </div>
+            {% endif %}
+        </div>
+
+{% endblock body %}

@@ -1,0 +1,36 @@
+{% extends 'core/core.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock title %}
+
+{% block body %}
+    <div class="formform">
+        {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <h1>Register an account</h1>
+            </div>
+            <label for="username">Username: </label>
+            <div class="input">
+                <input type="text" name="username" id="username" required style="padding: 8px;" size="40">
+            </div>
+            <label for="password">Password: </label>
+            <div class="input">
+                <input type="password" name="password" id="password" required style="padding: 8px;" size="40">
+            </div>
+            <label for="email">E-mail: </label>
+            <div class="input">
+                <input type="email" name="email" id="email" required style="padding: 8px;" size="40"><br>
+                <small>You know, to change password and stuff.</small>
+            </div>
+            <div class="input">
+                <input type="submit" value="Register" style="padding: 8px; font-size: 14px;">
+            </div>
+        </form>
+    </div>
+{% endblock body %}
