@@ -3,30 +3,59 @@
 {% block title %}Home{% endblock title %}
 
 {% block body %}
-                <div class="jumbotron">
-                    <div class="blog">
-                        <div class="writer"><small>@{{blog.writer}}</small></div>
-                        <div class="heading">{{blog.heading}}</div>
-                        <div class="content">{{blog.content}}</div><br>
-                        <div class="created_date">
-                            {{blog.created_date}}
-                            {% if blog.created_date != blog.modified_date %}
-                                <small>(Modified)</small>
-                            {% endif %}
-                        </div>
-                        <br>
-                        <div class="del-btn" style="float: left;">
-                            {% if user.is_superuser or blog.writer_id == user.id %}
-                                <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
-                            {% endif %}
-                        </div>
-                        <div class="edit-btn">
-                            {% if blog.writer_id == user.id %}
-                                <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
-                            {% endif %}
-                        </div>
-                    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="msg">{{ message }}</div>
+        {% endfor %}
+    {% endif %} 
+    <div class="jumbotron">
+        <div class="blog">
+            <div class="writer"><small>@{{blog.writer}}</small></div>
+            <div class="heading">{{blog.heading}}</div>
+            <div class="content">{{blog.content}}</div><br>
+            <div class="created_date">
+                {{blog.created_date}}
+                {% if blog.created_date != blog.modified_date %}
+                    <small>(Modified)</small>
+                {% endif %}
+            </div>
+            <br>
+            <div class="del-btn" style="float: left;">
+                {% if user.is_superuser or blog.writer_id == user.id %}
+                    <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
+                {% endif %}
+            </div>
+            <div class="edit-btn">
+                {% if blog.writer_id == user.id %}
+                    <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+    <form action="{% url 'comment' b_id=blog.id %}"method="POST" style="margin: -10px 20px 10px;">
+        {% csrf_token %}
+        <input type="text" name="cmt" maxlength="100" required style="padding: 8px; font-size: 16px; color: #383636;background-color:#c9c9c9; border-color: rgb(46, 44, 44);" size="80">
+        <input type="submit" value="Comment" style="padding: 8px; border-radius: 0px; background-color: aliceblue;">
+    </form>
+    
+    <div style="padding: 10px; color: white; font-size: 24px; text-decoration: underline; font-weight: bold;">Comments:</div>
+    <div style="padding: 10px;">
+        {% if comments %}
+            {% for comment in comments %}
+                {% if comment.blog.id == blog.id %}
+                <div style="margin: 0px 30px 20px; background-color: #979393;color: #313131; padding: 15px;">
+                    <div style="font-size: 16px; float: right;">@{{comment.writer}}</div>
+                    <div style="margin-bottom: 15px; font-size: 18px;">{{comment.comment_content}}</div>
+                    {% if user.id == comment.writer.id %}
+                        <a href="{% url 'comment_delete' c_id=comment.id %}" style="font-size: 12px; padding: 5px;">Remove</a>
+                    {% endif %}
                 </div>
+                {% endif %}
+                
+            {% endfor %}
+        {% endif %}
+    </div>
 
 
 {% endblock body %}

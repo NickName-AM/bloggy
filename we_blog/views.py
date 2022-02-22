@@ -1,6 +1,6 @@
-from time import sleep
+from email import message
 from django.shortcuts import redirect, render
-from we_blog.models import OurBlog
+from we_blog.models import OurBlog, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -19,13 +19,40 @@ def we_blog(request):
         # There might not even be 10 blogs. So, send as much blog you have (i.e less than 10)
         except Exception:
             b_logs = our_blogs
+
+        # Choose ONE comment from every blog (Only ONE)
         return render(request, 'general/home.html', {'blogs': b_logs})
+
+@login_required
+def comment(request, b_id):
+    uza = User.objects.get(id=request.user.id)
+    b_log = OurBlog.objects.get(id=b_id)
+    if request.method == 'GET':
+        return redirect('home')
+    elif request.method == 'POST':
+        cmt = request.POST['cmt']
+        Comment.objects.create(comment_content=cmt, writer=uza, blog=b_log)
+        messages.success(request, 'Comment was added.')
+        return redirect('show_blog',b_id=b_id)
+
+@login_required    
+def comment_delete(request, c_id):
+    try:
+        cmt = Comment.objects.get(id=c_id)
+        cmt.delete()
+        messages.success(request, 'Comment deleted.')
+    except:
+        message.error(request, 'Comment not deleted.')
+    return redirect('show_blog', b_id=cmt.blog.id)
+
+
 
 # View a specific blog
 @login_required
 def show_blog(request, b_id):
     my_blog = OurBlog.objects.get(id=b_id)
-    return render(request, 'general/show_blog.html', {'blog': my_blog})
+    comments = Comment.objects.all()
+    return render(request, 'general/show_blog.html', {'blog': my_blog, 'comments': comments})
 
 # Your blogs (The logged-in user)
 # From profile
