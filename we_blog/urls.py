@@ -5,6 +5,9 @@ urlpatterns = [
     path('home/', views.we_blog, name='home'),
     path('', views.we_blog),
 
+    path('comment/<int:b_id>', views.comment, name='comment'),
+    path('comment_delete/<int:c_id>', views.comment_delete, name='comment_delete'),
+
     path('blog/<int:b_id>', views.show_blog, name='show_blog'),
     path('add/', views.create, name='add'),
     path('edit/<int:b_id>/<int:w_id>', views.edit, name='edit'),

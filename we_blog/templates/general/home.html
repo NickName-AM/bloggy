@@ -35,19 +35,18 @@
                             {% endif %}
                         </div>
                         <br>
+                        <div>
                         {% if user.is_superuser or blog.writer_id == user.id %}
-                            <div class="del-btn" style="float: left;">
                                 <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
-                            </div>
                         {% endif %}
                         {% if blog.writer_id == user.id %}
-                            <div class="edit-btn">
                                 <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
-                            </div>
                         {% endif %}
+                        </div>
                         
                     </div>
                 </div>
+
             {% endfor %}
         {% endif %}
         <div class="below">

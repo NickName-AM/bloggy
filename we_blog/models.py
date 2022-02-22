@@ -11,3 +11,11 @@ class OurBlog(models.Model):
 
     def __str__(self):
         return str(self.writer)
+
+class Comment(models.Model):
+    comment_content = models.CharField(max_length=100, null=False)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    blog = models.ForeignKey(OurBlog, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.writer)
