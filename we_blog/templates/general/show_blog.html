@@ -1,5 +1,5 @@
 {% extends 'core/core.html' %}
-
+{% load static %}
 {% block title %}Home{% endblock title %}
 
 {% block body %}
@@ -22,24 +22,24 @@
             <br>
             <div class="del-btn" style="float: left;">
                 {% if user.is_superuser or blog.writer_id == user.id %}
-                    <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
+                    <a href="{% url 'remove' b_id=blog.id %}">Delete</a>
                 {% endif %}
             </div>
             <div class="edit-btn">
                 {% if blog.writer_id == user.id %}
-                    <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
+                    <a href="{% url 'edit' b_id=blog.id %}">Edit</a>
                 {% endif %}
             </div>
             
         </div>
     </div>
-    <form action="{% url 'comment' b_id=blog.id %}"method="POST" style="margin: -10px 20px 10px;">
-        {% csrf_token %}
-        <input type="text" name="cmt" maxlength="100" required style="padding: 8px; font-size: 16px; color: #383636;background-color:#c9c9c9; border-color: rgb(46, 44, 44);" size="80">
-        <input type="submit" value="Comment" style="padding: 8px; border-radius: 0px; background-color: aliceblue;">
-    </form>
     
     <div style="padding: 10px; color: white; font-size: 24px; text-decoration: underline; font-weight: bold;">Comments:</div>
+    <form action="{% url 'comment' b_id=blog.id %}" method="POST" class="profileform">
+        {% csrf_token %}
+        <input type="text" name="cmt" maxlength="100" required size="80" class="comment">
+        <input type="submit" value="Comment" class="submit-btn">
+    </form>
     <div style="padding: 10px;">
         {% if comments %}
             {% for comment in comments %}

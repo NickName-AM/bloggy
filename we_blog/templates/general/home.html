@@ -37,10 +37,10 @@
                         <br>
                         <div>
                         {% if user.is_superuser or blog.writer_id == user.id %}
-                                <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
+                                <a href="{% url 'remove' b_id=blog.id %}">Delete</a>
                         {% endif %}
                         {% if blog.writer_id == user.id %}
-                                <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
+                                <a href="{% url 'edit' b_id=blog.id %}">Edit</a>
                         {% endif %}
                         </div>
                         

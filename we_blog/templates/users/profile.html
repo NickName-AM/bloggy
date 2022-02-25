@@ -8,7 +8,7 @@
         <h1>Profile: {{user.username}}</h1>
     </div>
     <div>
-        <a href="{% url 'my_blogs' u_id=user.id %}">My Blogs</a>
+        <a href="{% url 'my_blogs' %}">My Blogs</a>
     </div>
     <div class="profileform">
         <form method="POST">
@@ -26,7 +26,7 @@
                 <input type="password" name="oldpassword" id="oldpassword" style="padding: 8px; font-size: 20px;" size="70">
             </div>
             <div>
-                <input type="submit" value="Change" style="padding: 8px; font-size: 14px;">
+                <input type="submit" value="Change" class="submit-btn">
             </div>
         </form>
     </div>

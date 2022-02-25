@@ -18,12 +18,12 @@
                         <br>
                         <div class="del-btn" style="float: left;">
                             {% if user.is_superuser or blog.writer_id == user.id %}
-                                <a href="{% url 'remove' b_id=blog.id w_id=blog.writer_id %}">Delete</a>
+                                <a href="{% url 'remove' b_id=blog.id %}">Delete</a>
                             {% endif %}
                         </div>
                         <div class="edit-btn">
                             {% if blog.writer_id == user.id %}
-                                <a href="{% url 'edit' b_id=blog.id w_id=blog.writer_id %}">Edit</a>
+                                <a href="{% url 'edit' b_id=blog.id %}">Edit</a>
                             {% endif %}
                         </div>
                     </div>

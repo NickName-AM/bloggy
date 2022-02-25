@@ -7,15 +7,15 @@
     <form method="POST">
         {% csrf_token %}
         <div>
-            <input type="text" maxlength="30" placeholder="Blogger's username" name="blogger_name" style="padding: 10px;" size="30">
-            <input type="submit" value="Search" style="padding: 8px; font-size: 14px;">
+            <input type="text" maxlength="30" placeholder="Blogger's username" name="blogger_name" class="comment" size="30">
+            <input type="submit" value="Search" class="submit-btn">
         </div>
     </form>
 </div>
 {% if blog_info %}
     {% for info in blog_info %}
         <div class="jumbotron">
-            <a class="blogger" href="{% url 'user_blogs' u_id=info.0.id %}"><h2>{{info.0}}</h2></a>
+            <a class="blogger" href="{% url 'user_blogs' b_uid=info.0.id %}"><h2>{{info.0}}</h2></a>
             Blogs: {{info.1}}
         </div>
     {% endfor %}

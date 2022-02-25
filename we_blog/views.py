@@ -1,4 +1,3 @@
-from email import message
 from django.shortcuts import redirect, render
 from we_blog.models import OurBlog, Comment
 from django.contrib.auth.models import User
@@ -39,10 +38,13 @@ def comment(request, b_id):
 def comment_delete(request, c_id):
     try:
         cmt = Comment.objects.get(id=c_id)
-        cmt.delete()
-        messages.success(request, 'Comment deleted.')
+        if request.user.id == cmt.writer.id:
+            cmt.delete()
+            messages.success(request, 'Comment deleted.')
+        else:
+            messages.warning(request, 'Not Authorized.')
     except:
-        message.error(request, 'Comment not deleted.')
+        messages.error(request, 'Comment not deleted.')
     return redirect('show_blog', b_id=cmt.blog.id)
 
 
@@ -51,15 +53,15 @@ def comment_delete(request, c_id):
 @login_required
 def show_blog(request, b_id):
     my_blog = OurBlog.objects.get(id=b_id)
-    comments = Comment.objects.all()
+    comments = Comment.objects.filter(blog__id=b_id)
     return render(request, 'general/show_blog.html', {'blog': my_blog, 'comments': comments})
 
 # Your blogs (The logged-in user)
 # From profile
 @login_required
-def my_blogs(request, u_id):
+def my_blogs(request):
     # Get every blog written by the current user
-    m_blogs = OurBlog.objects.filter(writer__id=u_id)
+    m_blogs = OurBlog.objects.filter(writer__id=request.user.id)
     return render(request, 'general/my_blogs.html', {'blogs': m_blogs})
 
 # Create a blog
@@ -78,31 +80,31 @@ def create(request):
    
 # Delete a blog (if you are superuser or author of the blog)
 @login_required
-def remove(request, b_id,w_id):
-    if request.user.is_superuser or request.user.id==w_id:
-        try:
-            my_blog = OurBlog.objects.get(id=b_id)
+def remove(request, b_id):
+    
+    try:
+        my_blog = OurBlog.objects.get(id=b_id)
+        if request.user.is_superuser or request.user.id==my_blog.writer.id:
             my_blog.delete()
             messages.success(request, 'Blog was successfully deleted.')
-        except:
-            messages.error(request, 'Blog was not deleted. Try again!')
-        finally:
-            return redirect('home')
-    else:
-        messages.error(request, 'Not authenticated')
+        else:
+            messages.error(request, 'Not Authenticated.')
+    except:
+        messages.error(request, 'Blog was not deleted. Try again!')
+    finally:
         return redirect('home')
 
 # Edit a blog (if you are the author)
 @login_required
-def edit(request, b_id,w_id):
+def edit(request, b_id):
     # If the current user is the writer of the blog
-    if request.user.id==w_id:
+    
         try:
             my_blog = OurBlog.objects.get(id=b_id)
         except:
             messages.error(request, 'Error occured while fetching the blog.')
             return redirect('home')
-        else:
+        if request.user.id==my_blog.writer.id:
             if request.method == 'GET':
                 return render(request, 'general/edit.html', {'blog': my_blog})
             elif request.method == 'POST':
@@ -111,10 +113,14 @@ def edit(request, b_id,w_id):
                 my_blog.save()
                 messages.success(request, 'Blog editted successfully!')
                 return redirect('home')
+        else:
+            messages.error(request, 'Not Authenticated.')
+            return redirect('home')
 
 # Every blog of a specific user
-def user_blogs(request, u_id):
-    b_logs = OurBlog.objects.filter(writer__id=u_id)
+def user_blogs(request, b_uid):
+    b_logs = OurBlog.objects.filter(writer__id=b_uid)
+
     return render(request, 'general/user_blogs.html', {'blogs': b_logs})
 
 
@@ -160,12 +166,10 @@ def signout(request):
 
 # Your profile
 @login_required
-def profile(request, u_id):
-    if u_id != request.user.id:
-        messages.warning(request, 'Profile view from different account.')
-        return redirect('home')
-
-    user = User.objects.get(id=u_id)
+def profile(request):
+    
+    user = User.objects.get(id=request.user.id)
+    
     if request.method == 'GET':
         return render(request, 'users/profile.html', {'user': user})
     elif request.method == 'POST':
@@ -182,13 +186,13 @@ def profile(request, u_id):
                 except:
                     messages.error(request, 'Could not change profile!')
                 finally:
-                    return redirect('profile', u_id=u_id)
+                    return redirect('profile')
             else:
                 messages.error(request, 'Could not change profile!')
                 return redirect('home')
         else:
             messages.error(request, 'Wrong password')
-            return redirect('profile', u_id=u_id)
+            return redirect('profile')
 
 # Every single blogger
 # Search function
@@ -199,7 +203,7 @@ def bloggers(request):
     if request.method == 'GET':
         for blogger in every_blogger:
             blogger_blog = OurBlog.objects.filter(writer__id=blogger.id)
-            blog_info.append((blogger,len(blogger_blog)))
+            blog_info.append( (blogger,len(blogger_blog)) )
         return render(request, 'users/bloggers.html', {'blog_info': blog_info})
     elif request.method == 'POST':
         blogger_name = request.POST['blogger_name']

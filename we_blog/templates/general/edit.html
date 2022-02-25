@@ -1,5 +1,5 @@
 {% extends 'core/core.html' %}
-
+{% load static %}
 {% block title %}Add Blog{% endblock title %}
 
 {% block body %}
@@ -9,8 +9,8 @@
     <form method="POST">
         {% csrf_token %}
         <div>
-            <textarea name="content" id="content" cols="80" rows="20" maxlength="3000" style="background-color: rgb(70,70,70);color: white; font-size: 20px;">{{blog.content}}</textarea>
+            <textarea name="content" id="content" cols="120" rows="20" maxlength="3000" class="txtarea">{{blog.content}}</textarea>
         </div>
-        <input type="submit" value="Edit" style="padding: 8px; font-size: 14px;">
+        <input type="submit" value="Edit" class="submit-btn">
     </form>
 {% endblock body %}
