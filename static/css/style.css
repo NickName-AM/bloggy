@@ -52,7 +52,7 @@ a.add:hover{
 }
 
 .heading{
-    font-size: 45px;
+    font-size: 50px;
 }
 
 .writer{
@@ -61,7 +61,9 @@ a.add:hover{
 }
 
 .content{
-    font-size: 18px;
+    text-align: justify;
+    font-size: 25px;
+    padding: 10px;
 }
 
 big{
@@ -131,4 +133,36 @@ label{
     background-color: rgba(54, 69, 79);
     margin-top: 10px;
     text-align: center;
+}
+
+.comment{
+    padding: 10px;
+    font-size: 20px;
+    
+}
+
+.submit-btn{
+    margin: 12px;
+    padding: 10px;
+    background-color: rgb(114, 114, 114);
+    color: white;
+    border: 0px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.submit-btn:hover{
+    background-color: rgb(104, 106, 107);
+    margin: 10px;
+    padding: 12px;
+    border-radius: 7px;
+    transition-duration: 0.1s;
+}
+
+.txtarea{
+    padding: 15px;
+    background-color: rgb(70, 70, 70);
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
 }
