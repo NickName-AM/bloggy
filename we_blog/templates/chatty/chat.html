@@ -1,0 +1,25 @@
+{% extends 'core/core.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+    <div class="msgform">
+        <form method="POST">
+            {% csrf_token %}
+            <input class="comment" type="text" name="message" maxlength="1000" size="100" required>
+            <input class="submit-btn" type="submit" value="Send">
+        </form>
+    </div>
+
+    {% if msgs %}
+        <div class="jumbotron">
+            {% for msg in msgs %}
+                {% if msg.writer == user.username %}
+                    <div style="text-align: right;">{{msg.msg}}</div>
+                {% else %}
+                    <div style="text-align: left;">{{msg.msg}}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock body %}

@@ -20,4 +20,6 @@ urlpatterns = [
     path('logout/', views.signout,name='signout'),
     path('profile/', views.profile, name='profile'),
     path('bloggers/', views.bloggers, name='bloggers'),
+
+    path('chat/<str:uname>', views.chat, name='chat'),
 ]
