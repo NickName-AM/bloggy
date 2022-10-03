@@ -1,6 +1,6 @@
 from csv import writer
 from django.shortcuts import redirect, render
-from we_blog.models import Message, OurBlog, Comment
+from we_blog.models import OurBlog, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -213,21 +213,3 @@ def bloggers(request):
             if blogger_name.lower() in blogger.username.lower():
                 blog_info.append((blogger,len(blogger_blog)))
         return render(request, 'users/bloggers.html', {"blog_info": blog_info})
-
-
-
-@login_required
-def chat(request, uname):
-    
-    sender = User.objects.get(id=request.user.id)
-    recipient = User.objects.get(username=uname)
-    messagess = Message.objects.filter(writer=sender.username, recipient=recipient.username)
-    print(messagess)
-
-    if request.method == 'GET':
-        return render(request, 'chatty/chat.html', {"msgs": messagess})
-    elif request.method == 'POST':
-        msg = request.POST['message']
-        print(msg)
-        Message.objects.create(msg=msg, writer=sender.username, recipient=recipient.username)
-        return redirect(chat, uname=uname)

@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -20,12 +19,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.writer)
-
-class Message(models.Model):
-    msg = models.CharField(max_length=1000, null=False)
-    writer = models.CharField(max_length=100)
-    recipient = models.CharField(max_length=100)
-    d_time = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return (self.writer + " to " + self.recipient)
