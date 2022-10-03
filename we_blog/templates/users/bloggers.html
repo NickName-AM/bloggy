@@ -18,7 +18,6 @@
         <div class="jumbotron">
             <div style="float:right">Blogs: {{info.1}}</div>
             <a class="blogger" href="{% url 'user_blogs' b_uid=info.0.id %}"><h2>{{info.0}}</h2></a>
-            <a class="submit-btn" href="{% url 'chat' uname=info.0.username %}">Chat</a>
             
         </div>
     {% endfor %}
