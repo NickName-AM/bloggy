@@ -17,11 +17,12 @@
         {% csrf_token %}
         <label for="username">Username: </label>
         <div class="input">
-            <input type="text" name="username" id="username" required style="padding: 8px;" size="40">
+            <input type="text" name="username" id="username" class="input-box" style="padding: 8px;" required>
         </div class="input">
+        
         <label for="password">Password: </label>
         <div class="input">
-            <input type="password" name="password" id="password" required style="padding: 8px;" size="40">
+            <input type="password" name="password" id="password" class="input-box" style="padding: 8px;" required>
         </div>
         <div class="input">
             <input type="submit" value="Login" class="submit-btn">

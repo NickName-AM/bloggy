@@ -79,10 +79,16 @@ big{
 .formform{
     width:320px;
     background-color: rgb(69,69,69);
-    padding: 40px 30px 40px;
+    padding: 40px 40px;
     float:right;
     margin-top: 100px;
     border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box{
+    width: 90%;    
 }
 
 label{
